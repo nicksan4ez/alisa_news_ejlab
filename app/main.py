@@ -78,19 +78,7 @@ async def alice_webhook(request: Request):
 
     # Определяем, что именно нужно зачитать
     text_to_say = ""
-    
-    if "сутки" in command or "весь день" in command or "все" in command:
-        parts = []
-        if news_data["утро"]: parts.append(news_data["утро"])
-        if news_data["день"]: parts.append(news_data["день"])
-        if news_data["вечер"]: parts.append(news_data["вечер"])
-        
-        if parts:
-            text_to_say = "Новости за сутки. " + " \n ".join(parts)
-        else:
-            text_to_say = "Не нашла постов за сегодня."
-            
-    elif "утро" in command:
+    if "утро" in command:
         text_to_say = news_data["утро"] if news_data["утро"] else "Утренний пост еще не вышел."
     elif "день" in command:
         text_to_say = news_data["день"] if news_data["день"] else "Дневной пост еще не вышел."
@@ -98,7 +86,7 @@ async def alice_webhook(request: Request):
         text_to_say = news_data["вечер"] if news_data["вечер"] else "Вечерний пост еще не вышел."
     else:
         # Если команда не распознана (например, при запуске навыка без параметров)
-        text_to_say = "Какие новости вам прочитать? За утро, день, вечер или за весь день?"
+        text_to_say = "Какие новости вам прочитать? За утро, день или вечер?"
         return build_response(text_to_say, end_session=False)
 
     return build_response(text_to_say, end_session=True)

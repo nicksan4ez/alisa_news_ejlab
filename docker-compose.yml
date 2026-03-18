@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  alice-bot:
+    build: .
+    container_name: alice_news_bot
+    restart: always
+    ports:
+      # Пробрасываем порт 8000 из контейнера только на локальный интерфейс сервера
+      - "127.0.0.1:8000:8000"
